@@ -1,38 +1,58 @@
 // Queue with two stacks. Implement a queue with two stacks so that each queue operations takes a
 // constant amortized number of stack operations. Hint: If you push elements onto a stack and then 
 // pop them all, they appear in reverse order. If you repeat this process, they're now back in order.
-import java.io.*;
+// import java.io.*;
 import java.util.*;
 
 class Queue {
-
-
+    private Stack<Integer> s1;
+    private Stack<Integer> s2;
+    
     public Queue() {
 
+    s1= new Stack<Integer>();
+    s2 = new  Stack<Integer>();
     }
+
 
     // Push element x to the back of queue.
+    // time complexity:O(n)    space complexity:O(1)
     public void enqueue(int x) {
+        while(!s1.isEmpty()) {
+			s2.push(s1.pop());
+		}
+		s2.push(x);
+		while(!s2.isEmpty()) {
+			s1.push(s2.pop());
+		}
+	}
 
-    }
+
 
     // Removes the element from in front of queue.
+    // time complexity:O(1)    space complexity:O(1)
     public int dequeue() {
+        return s1.pop();
+    
 
     }
     
     // Get the front element.
     public int peek() {
+        return s1.peek();
 
     }
     
     // Return whether the queue is empty.
     public boolean empty() {
+        return (s1.isEmpty() && s2.isEmpty() ? (true): (false));
 
     }
 
     // Return the number of elements in queue.
     public boolean size() {
+        return false;
+        // return (s1.size()+s2.size()>0)? (true):(false);
 
     }
     
@@ -51,5 +71,6 @@ class Queue {
                 System.out.println(queue.peek());
             } 
         }
+        scan.close();
     }
 }
